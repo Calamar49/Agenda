@@ -179,7 +179,7 @@ function badgeClass(string $tipo): string
                                         <i class="bi bi-pencil-fill"></i>
                                     </button>
                                     <button class="btn btn-danger"
-                                            onclick="confirmDelete(<?= (int) $c['id'] ?>, '<?= htmlspecialchars($c['nombres'], ENT_QUOTES | ENT_JS, 'UTF-8') ?>')"
+                                            onclick="confirmDelete(<?= (int) $c['id'] ?>, '<?= addslashes(htmlspecialchars($c['nombres'], ENT_QUOTES, 'UTF-8')) ?>')"
                                             title="Eliminar">
                                         <i class="bi bi-trash-fill"></i>
                                     </button>
@@ -449,13 +449,16 @@ function confirmDelete(id, nombre) {
 /**
  * Filtro en tiempo real sobre la tabla de contactos.
  */
-document.getElementById('buscador').addEventListener('input', function () {
-    const filter = this.value.toLowerCase().trim();
-    document.querySelectorAll('#tabla-contactos tbody tr').forEach(row => {
-        const text = row.textContent.toLowerCase();
-        row.style.display = text.includes(filter) ? '' : 'none';
+const buscador = document.getElementById('buscador');
+if (buscador) {
+    buscador.addEventListener('input', function () {
+        const filter = this.value.toLowerCase().trim();
+        document.querySelectorAll('#tabla-contactos tbody tr').forEach(row => {
+            const text = row.textContent.toLowerCase();
+            row.style.display = text.includes(filter) ? '' : 'none';
+        });
     });
-});
+}
 </script>
 
 </body>
